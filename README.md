@@ -1,3 +1,27 @@
+1. сервр trp - src/server/trpc.ts
+
+2. src/server/context.ts  - создает контекст для tRPC сервера, который содержит информацию об аутентификации пользователя. Функция createContext получает данные о текущем пользователе через Clerk и предоставляет их всем tRPC процедурам. Тип Context определяет структуру данных контекста для типизации в TypeScript. 
+
+3. маршрутизатор-роутер - src/server/routes/index.ts 
+
+4. src/app/api/clerkhooks/route.ts обрабатывает веб-хуки от Clerk. Он прослушивает событие создания нового пользователя (user.created) и автоматически создает соответствующую запись в базе данных в таблице Customers.Когда пользователь регистрируется через Clerk, этот обработчик получает уведомление и сохраняет данные пользователя (ID, имя, фамилию, email) в локальную базу данных для дальнейшего использования в приложении. Этот файл не импортируется другими компонентами - он работает как standalone API endpoint, который Clerk автоматически вызывает при создании нового пользователя.
+
+5. обработчик маршрута - src/app/api/trpc/[trpc]/route.ts используем для Nexths fetch - adapters
+
+6. клиент trpc - src/app/_trpc/client.ts The tRPC route handler needs CORS headers added(This allows cross-origin requests from your ngrok domain to the localhost API ). Here's the fix - src/app/api/trpc/[trpc]/route.ts
+
+7. src/app/_trpc/Provider.tsx используем localhost URL to use window.location.origin, which will automatically use the correct domain whether it's localhost, ngrok, or any other deployment URL
+
+8. клиент запроса react на все дочернии элементы ({children}) - src/app/_trpc/Provider.tsx
+
+9. src/components/Container.tsx создает переиспользуемый компонент-контейнер для ограничения ширины контента и его центрирования на странице. Он применяет CSS-классы: максимальная ширина 5xl (1024px), центрирование через mx-auto и горизонтальные отступы по 20px. Компонент принимает стандартные пропы div-элемента и позволяет добавлять дополнительные CSS-классы через className. Он оборачивает весь интерфейс todo-листа на странице дашборда, обеспечивая ограничение ширины контента, центрирование и добавляя вертикальную компоновку элементов.
+
+10. клиент запроса передаём в src/app/layout.tsx
+11. клиент компанент запросов - src/app/_components/TodoList.tsx
+12. результата компанент запросов передаём - src/app/page.tsx ......
+13. src/app/_trpc/serverClient.ts - избежать мерцании страницы при её обновлении
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
